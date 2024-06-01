@@ -10,7 +10,7 @@ const Sidebar = () => {
       >
         <div className=' h-full flex-col hidden sm:flex overflow-y-auto border-r border-slate-200 bg-background px-3 py-4 dark:border-slate-700 '>
           <div
-            to={'/home'}
+            to={"/home"}
             className='mb-10 flex items-center rounded px-3 py-2 text-slate-900 dark:text-white'
           >
             <svg
@@ -29,12 +29,14 @@ const Sidebar = () => {
             >
               <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
             </svg>
-            <span className='ml-3 overflow-x-hidden text-base font-semibold'>Kways</span>
+            <span className='ml-3 overflow-x-hidden text-base font-semibold'>
+              Kways
+            </span>
           </div>
           <ul className='space-y-2 text-sm font-medium'>
             <li>
               <Link
-                to={'/home'}
+                to={"/home"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
                 <svg
@@ -54,12 +56,14 @@ const Sidebar = () => {
                   <polyline points='9 22 9 12 15 12 15 22' />
                 </svg>
 
-                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>Dashboard</span>
+                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
+                  Dashboard
+                </span>
               </Link>
             </li>
             <li>
               <Link
-                to={'/employee'}
+                to={"/employee"}
                 className='flex items-start rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
                 <svg
@@ -81,21 +85,25 @@ const Sidebar = () => {
                   <path d='M22 21v-2a4 4 0 0 0-3-3.87' />
                   <path d='M16 3.13a4 4 0 0 1 0 7.75' />
                 </svg>
-                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>Employees</span>
+                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
+                  Employees
+                </span>
               </Link>
             </li>
             <li>
               <Link
-                to={'/selection'}
+                to={"/selection"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
                 <FaBuildingColumns className='text-xl' />
-                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>Selection</span>
+                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
+                  Selection
+                </span>
               </Link>
             </li>
             <li>
               <Link
-                to={'/home'}
+                to={"/notification"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
                 <FaBuildingColumns className='text-xl' />
@@ -106,16 +114,18 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                to={'/home'}
+                to={"/home"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
                 <FaBuildingColumns className='text-xl' />
-                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>Reports</span>
+                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
+                  Reports
+                </span>
               </Link>
             </li>
             <li>
               <Link
-                to={'/home'}
+                to={"/home"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
                 <FaBuildingColumns className='text-xl' />
@@ -126,7 +136,7 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                to={'/setting'}
+                to={"/setting"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
                 <svg
@@ -146,7 +156,9 @@ const Sidebar = () => {
                   <path d='M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z' />
                   <circle cx='12' cy='12' r='3' />
                 </svg>
-                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>Settings</span>
+                <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
+                  Settings
+                </span>
               </Link>
             </li>
           </ul>

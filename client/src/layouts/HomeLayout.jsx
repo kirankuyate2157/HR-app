@@ -21,7 +21,7 @@ const HomeLayout = () => {
           <div className='w-full'>
             <TopBar />
             <Navbar />
-            <div className='sm:p-2 sm:px-6'>
+            <div className='sm:p-2 sm:px-10'>
             <Outlet />
             </div>
           </div>

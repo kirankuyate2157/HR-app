@@ -34,7 +34,7 @@ const SelectionCard = ({ tab }) => {
           </p>
         </div>
         {tab === "application" ? (
-          <div className='flex  gap-2 justify-around mt-2'>
+          <div className='flex  gap-2 justify-end mt-2'>
             <Select>
               <SelectTrigger className='h-8 bg-background w-[150px]'>
                 <SelectValue placeholder='Theme' />
