@@ -12,6 +12,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 
 const Employee = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,7 +25,7 @@ const Employee = () => {
 
   let filterOptions = ["fresher", "Student", "1yr Exp", "2yr Exp", "3yr Exp"];
   return (
-    <div className="h-[90vh] overflow-auto">
+    <ScrollArea className="h-[90vh] overflow-auto">
       Employee component..
       <div className='flex w-full  items-center justify-between space-x-4 mt-2 mb-4'>
         <div className=' w-80  bg-white shadow-md p-1 px-2 flex items-center gap-3  border border-gray-200 rounded-lg'>
@@ -74,7 +76,7 @@ const Employee = () => {
           </PaginationContent>
         </Pagination>
       </div>
-    </div>
+    </ScrollArea>
   );
 };
 

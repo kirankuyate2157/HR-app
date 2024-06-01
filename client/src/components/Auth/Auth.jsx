@@ -124,18 +124,18 @@ export function TabsDemo() {
     console.log("Submit");
     if (password2 && userName2) {
       console.log("Submit called");
-      const res = await createUser(userName2, password2);
-      if (res.status == (200 || 201)) {
-        toast("User has been created.✅ login now..");
-        setUserName2("");
-        setPassword2("");
-      } else {
-        if (res) {
-          toast(res);
-        } else {
-          toast("Something went Wrong!");
-        }
-      }
+      // const res = await createUser(userName2, password2);
+      // if (res.status == (200 || 201)) {
+      //   toast("User has been created.✅ login now..");
+      //   setUserName2("");
+      //   setPassword2("");
+      // } else {
+      //   if (res) {
+      //     toast(res);
+      //   } else {
+      //     toast("Something went Wrong!");
+      //   }
+      // }
     } else {
       toast("field required!");
     }
