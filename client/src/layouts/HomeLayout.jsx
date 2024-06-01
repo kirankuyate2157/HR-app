@@ -21,7 +21,9 @@ const HomeLayout = () => {
           <div className='w-full'>
             <TopBar />
             <Navbar />
+            <div className='sm:p-2 sm:px-6'>
             <Outlet />
+            </div>
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
