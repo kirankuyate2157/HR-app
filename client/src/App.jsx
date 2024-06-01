@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { Route, Routes } from "react-router";
 
-function App() {
-  const [count, setCount] = useState(0)
+import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
+import TopBar from "./components/TopBar";
+import { TabsDemo } from "./components/Auth/Auth";
+import { Toaster } from "@/components/ui/sonner";
 
+
+const Home = () => {
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Sidebar />
+      <div className='w-full'>
+        <TopBar />
+        <Navbar />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
-}
+  );
+};
+function App() {
+  return (
+    <div className='flex dark p-0 m-0 w-[100vw] h-[100vh]'>
+      <Toaster />
 
-export default App
+      <Routes>
+        <Route path='/' element={<TabsDemo />} />
+        <Route path='/home' element={<Home />} />
+      </Routes>
+    </div>
+  );
+}
+export default App;
