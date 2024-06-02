@@ -41,10 +41,10 @@ const registration = asyncHandler(async (req, res) => {
   ) {
     throw new ApiError(400, "field is missing or empty 🫠");
   }
-
+  let adminStatus;
   if (isAdmin !== "admin") {
     if (adminId.trim() !== "") {
-      const adminStatus = await User.findOne({
+      adminStatus = await User.findOne({
         $or: [{ username: adminId }, { email: adminId }],
       });
       if (!adminStatus) {
@@ -63,7 +63,7 @@ const registration = asyncHandler(async (req, res) => {
     username: username.toLowerCase(),
     email,
     accountType: isAdmin,
-    adminId: adminId ?? "",
+    adminId: adminId ? adminStatus._id : "",
     password,
   });
 
@@ -294,39 +294,6 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     );
 });
 
-const loginGoogleDB = asyncHandler(async (req, res) => {
-  const { _id, email } = req.user.user;
-
-  if (!_id) {
-    throw new ApiError(404, "user does not exist .🫠..");
-  }
-
-  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
-    _id
-  );
-
-  const loggedUser = await User.findById(_id).select(
-    "-password -refreshToken "
-  );
-
-  const options = { httpOnly: true, secure: true }; //only modifiable  by server
-
-  return res
-    .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
-    .json(
-      new ApiResponse(
-        200,
-        { user: loggedUser, accessToken, refreshToken },
-        "user logged in successfully ✅"
-      )
-    );
-});
-
-const googleAuthFail = asyncHandler(async (req, res) => {
-  throw new ApiError(404, "user does not exist .🫠..");
-});
 export {
   registration,
   loginUser,
@@ -337,8 +304,4 @@ export {
   getCurrentUser,
   updateUserAvatar,
   updateUserCoverImage,
-  getUserChannelProfile,
-  getWatchHistory,
-  loginGoogleDB,
-  googleAuthFail,
 };
