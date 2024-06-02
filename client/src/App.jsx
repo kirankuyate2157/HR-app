@@ -7,9 +7,7 @@ import Employee from "./components/Employee";
 import Details from "./components/Employee/Details";
 import Selection from "./components/Selection";
 import Notification from "./components/Notification";
-
-
-
+import Forms from "./components/Forms";
 
 function App() {
   return (
@@ -20,15 +18,15 @@ function App() {
         <Route path='/auth' element={<TabsDemo />} />
 
         <Route path='/' element={<HomeLayout />}>
-           {/* Define child routes here */}
-           <Route index element={<h1>hiiiiiiiiiiiiiiiiiiiiiiiiiiiiii</h1>} />
-           <Route path="/employee" element={<Employee/>} />
-           <Route path="/employee/:id" element={<Details/>} />
-           <Route path="/selection" element={<Selection/>} />
-           <Route path="/notification" element={<Notification/>} />
-           <Route path="/home" element={<h1>ghgvvhvvgvgvg</h1>} />
-           <Route path="*" element={<h1>No content</h1>} />
-          {/* Add more routes as needed */}
+          <Route index element={<h1>hiiiiiiiiiiiiiiiiiiiiiiiiiiiiii</h1>} />
+          <Route path='/employee' element={<Employee />} />
+          <Route path='/employee/:id' element={<Details />} />
+          <Route path='/selection' element={<Selection />} />
+          <Route path='/notification' element={<Notification />} />
+          <Route path='/reports' element={<Forms />} />
+          <Route path='/forms' element={<Forms />} />
+          <Route path='/home' element={<h1>ghg</h1>} />
+          <Route path='*' element={<h1>No content</h1>} />
         </Route>
       </Routes>
     </div>

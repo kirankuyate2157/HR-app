@@ -114,7 +114,7 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                to={"/home"}
+                to={"/reports"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
                 <FaBuildingColumns className='text-xl' />
@@ -125,7 +125,7 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                to={"/home"}
+                to={"/forms"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
                 <FaBuildingColumns className='text-xl' />
