@@ -14,7 +14,7 @@ import { currentUser } from "./utils/apis";
 import { showToast } from "./utils/showToast";
 
 function App() {
-  axios.defaults.baseURL = "http://localhost:8080/api/v1"; // "https://kways-hr.onrender.com/api/v1";
+  axios.defaults.baseURL =  "https://kways-hr.onrender.com/api/v1"; //"http://localhost:8080/api/v1"; 
   axios.defaults.params = {};
   axios.defaults.withCredentials = true;
 
