@@ -14,7 +14,7 @@ import { useState } from "react";
 const SelectionCard = ({ tab }) => {
   const [edit, setEdit] = useState(false);
   return (
-    <Card className='flex flex-col w-28 sm:w-[15rem] sm:p-3 gap-2 overflow-hidden bg-muted border-gray-600'>
+    <Card className='flex flex-col w-[11rem]   sm:w-[15rem] p-3 gap-2 overflow-hidden bg-muted border-gray-600'>
       <EditMail open={edit} setOpen={() => setEdit(false)} />
       <div className='flex justify-center  '>
         <img
@@ -23,9 +23,9 @@ const SelectionCard = ({ tab }) => {
           className='w-full bg-slate-800 max-w-64 rounded-lg'
         />
       </div>
-      <div className='w-full  rounded'>
+      <div className='w-full   rounded'>
         <h2>Kiran Kuyate</h2>
-        <div className=' flex justify-center text-gray-300 gap-2 text-sm '>
+        <div className=' text-xs flex  flex-col sm:flex-row justify-center  text-gray-300 gap-2 sm:text-sm '>
           <p>Full stack developer</p>
           <p>
             <span className='bg-green-800 rounded-md px-2 p-[2px]  items-center text-center text-xs'>
@@ -52,7 +52,7 @@ const SelectionCard = ({ tab }) => {
         ) : (
           <div className='flex  gap-2 justify-end mt-2'>
             <Button
-              className='bg-background text-white hover:bg-gray-900 dark:hover:text-gray-400 font-bold p-0 px-2 h-8'
+              className='bg-background text-xs sm:text-sm text-white hover:bg-gray-900 dark:hover:text-gray-400 font-bold p-0 px-2 h-8'
               onClick={() => setEdit(true)}
             >
               Edit mail

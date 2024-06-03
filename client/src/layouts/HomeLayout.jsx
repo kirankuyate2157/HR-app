@@ -8,22 +8,24 @@ import {
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import TopBar from "../components/TopBar";
+import MobileBar from "@/components/Mobilebar";
 
 
 const HomeLayout = () => {
     return (
       <ResizablePanelGroup direction='horizontal'>
-        <ResizablePanel defaultSize={12} maxSize={12} minSize={4}>
+        <ResizablePanel className="hidden lg:block" defaultSize={12} maxSize={12} minSize={8}>
           <Sidebar />
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle  className="hidden lg:block" />
         <ResizablePanel>
-          <div className='w-full'>
+          <div className='w-full  '>
             <TopBar />
             <Navbar />
-            <div className='sm:p-2 sm:px-10'>
+            <div className='px-2 h-full  min-h-[100vh] lg:px-10 '>
             <Outlet />
             </div>
+            <MobileBar/>
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

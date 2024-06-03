@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Details = () => {
   return (
-    <ScrollArea className='p-4 mb-4  w-full h-[90vh] overflow-auto bg-gray-800 rounded '>
+    <ScrollArea className='p-4 mb-4  w-full h-[100vh] overflow-auto bg-gray-800 rounded '>
       <div className=''>
         <div className='flex w-full h-48 max-h-48'>
           <img
@@ -36,8 +36,8 @@ const Details = () => {
         </div>
       </div>
       <hr />
-      <div className='flex justify-between py-6'>
-        <div className='flex flex-wrap w-[70%] justify-start gap-2'>
+      <div className='flex flex-col gap-4 lg:flex-row justify-between py-6'>
+        <div className='flex flex-wrap w-full md:w-[70%] justify-start gap-2'>
           <h2 className='font-bold mt-1'>Experience </h2>
           <p className='w-full ml-3   text-start'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
@@ -120,8 +120,8 @@ const Details = () => {
             <h2 className='flex px-2 justify-end'>- Sudarshan Patil</h2>
           </Card>
         </div>
-        <div className='w-[20%] flex flex-col'>
-          <Card className='w-full h-auto mr-2 gap-2   text-sm p-3 flex flex-col items-start justify-start'>
+        <div className='w-full  md:w-[20%] flex flex-col'>
+          <Card className='w-full h-auto mr-2 gap-2 border-gray-700  text-sm p-3 flex flex-col items-start justify-start'>
             <h2 className='font-bold'>Github </h2>
             <p className=''>
               http://github.com{" "}

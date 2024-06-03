@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,142 +11,52 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { loginUser } from "./utils/authApi.js";
+import { showToast } from "../../utils/showToast";
+import Register from "./Register";
+import { useNavigate } from "react-router";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { toast } from "sonner";
-
-import { useState } from "react";
-
-function DialogDemo({ open, setOpen, value }) {
-  const [username, setUsername] = useState("");
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [disable, setDisable] = useState(false);
-
-  const HandleSubmit = async () => {
-    console.log("Submit");
-    setDisable(true);
-    if (password1 && password1 === password2 && username) {
-      console.log("Submit called");
-      // const res = await createUser(username, password1);
-      // if (res.status == (200 || 201)) {
-      //   toast("User has been created.✅ login now..");
-      //   setUsername("");
-      //   setPassword1("");
-      //   setPassword2("");
-      // } else {
-      //   if (res) {
-      //     toast(res);
-      //   } else {
-      //     toast("Something went Wrong!");
-      //   }
-      // }
-    } else {
-      toast("field required or password nat matching !");
-    }
-    setDisable(false);
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='dark sm:max-w-[425px] border-border'>
-        <DialogHeader>
-          <DialogTitle>{`Register as ${
-            value == "member" ? "Member" : "Admin"
-          }`}</DialogTitle>
-          <DialogDescription>{`
-            Register as ${
-              value == "member" ? "Member" : "Admin"
-            } and manage human resources..`}
-          </DialogDescription>
-        </DialogHeader>
-        <div className='grid gap-4 py-4'>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='name' className='text-right'>
-              Username
-            </Label>
-            <Input
-              id='name'
-              value={username}
-              className='col-span-3'
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='password1' className='text-right'>
-              Password
-            </Label>
-            <Input
-              id='password1'
-              type='password'
-              value={password1}
-              onChange={(e) => setPassword1(e.target.value)}
-              className='col-span-3'
-            />
-          </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='password2' className='text-right pr-2'>
-              Confirm
-            </Label>
-            <Input
-              id='password2'
-              type='password'
-              value={password2}
-              onChange={(e) => setPassword2(e.target.value)}
-              className='col-span-3'
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button onClick={HandleSubmit} disable={disable}>
-            Register
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-export function TabsDemo() {
+export function Auth() {
   const [open, setOpen] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [userName2, setUserName2] = useState("");
+  const [username2, setUsername2] = useState("");
   const [password2, setPassword2] = useState("");
   const [tabValue, setTabValue] = useState("member");
-  const handleAdminSubmit = async () => {
-    console.log("Submit");
-    if (password2 && userName2) {
-      console.log("Submit called");
-      // const res = await createUser(userName2, password2);
-      // if (res.status == (200 || 201)) {
-      //   toast("User has been created.✅ login now..");
-      //   setUserName2("");
-      //   setPassword2("");
-      // } else {
-      //   if (res) {
-      //     toast(res);
-      //   } else {
-      //     toast("Something went Wrong!");
-      //   }
-      // }
-    } else {
-      toast("field required!");
+
+  const nav = useNavigate();
+  const handleLoginSubmit = async () => {
+    try {
+      const userData = { username, password };
+      await loginUser(userData);
+      showToast("Logged in successfully", "success");
+      nav("/home");
+    } catch (error) {
+      showToast(error, "error");
     }
   };
+
+  const handleAdminSubmit = async () => {
+    try {
+      const userData = {
+        username: username2,
+        password: password2,
+        isAdmin: "admin",
+      };
+      await loginUser(userData);
+      showToast("Logged in successfully", "success");
+      nav("/home");
+    } catch (error) {
+      showToast(error, "error");
+    }
+  };
+
   return (
     <div className='flex flex-col space-y-5 w-full justify-center items-center'>
-      <DialogDemo open={open} setOpen={setOpen} value={tabValue} />
+      <Register open={open} setOpen={setOpen} isAdmin={tabValue} />
       <div>
-        <h2 className='capitalize font-mono text-3xl '>Hiring platform</h2>
-        <hr className=' border-pink-600 border-2 w-10 self-end ' />
+        <h2 className='capitalize font-mono text-3xl'>Hiring Platform</h2>
+        <hr className='border-pink-600 border-2 w-10 self-end' />
       </div>
       <Tabs defaultValue='member' className='w-[400px]'>
         <TabsList className='grid gap-1 w-full grid-cols-2'>
@@ -161,18 +72,42 @@ export function TabsDemo() {
             <CardHeader>
               <CardTitle>Members Account</CardTitle>
               <CardDescription>
-                {` login your account here. After login, you'll be you will redirect to  Home page.`}
+                {`Login to your account here. After login, you will be redirected to the home page.`}
               </CardDescription>
             </CardHeader>
+
             <CardContent className='space-y-2'>
+              <div className='space-y-1 text-start  text-sm'>
+                <Label
+                  htmlFor='name'
+                  className='flex text-orange-800 justify-start py-1'
+                >
+                  Test Credentials
+                </Label>
+
+                <div className='pl-2 flex flex-wrap items-center  text-xs gap-2 '>
+                  username :{" "}
+                  <span className='bg-gray-900 p-1 px-2 rounded-md'>
+                    test85
+                  </span>{" "}
+                  password :{" "}
+                  <span className='bg-gray-900 p-1 px-2 rounded-md'>
+                    12345678
+                  </span>
+                  admin username :{" "}
+                  <span className='bg-gray-900 p-1 px-2 rounded-md'>
+                    demo85
+                  </span>{" "}
+                </div>
+              </div>
               <div className='space-y-1'>
                 <Label htmlFor='name' className='flex justify-start py-1'>
                   Username
                 </Label>
                 <Input
                   id='name'
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div className='space-y-1'>
@@ -188,7 +123,9 @@ export function TabsDemo() {
               </div>
             </CardContent>
             <CardFooter className='space-x-2 flex justify-end'>
-              <Button className='w-full'>Login</Button>
+              <Button className='w-full' onClick={handleLoginSubmit}>
+                Login
+              </Button>
             </CardFooter>
           </Card>
         </TabsContent>
@@ -197,10 +134,29 @@ export function TabsDemo() {
             <CardHeader>
               <CardTitle>Admin Account</CardTitle>
               <CardDescription>
-                {` login your account here. After login, you'll be you will redirect to admin page.`}
+                {`Login to your account here. After login, you will be redirected to the admin page.`}
               </CardDescription>
             </CardHeader>
             <CardContent className='space-y-2'>
+              <div className='space-y-1 text-start  text-sm'>
+                <Label
+                  htmlFor='name'
+                  className='flex text-orange-800 justify-start py-1'
+                >
+                  Test Credentials
+                </Label>
+
+                <div className='pl-2 flex flex-wrap items-center  text-xs gap-2 '>
+                  username :{" "}
+                  <span className='bg-gray-900 p-1 px-2 rounded-md'>
+                    demo85
+                  </span>{" "}
+                  password :{" "}
+                  <span className='bg-gray-900 p-1 px-2 rounded-md'>
+                    12345678
+                  </span>
+                </div>
+              </div>
               <div className='space-y-1'>
                 <Label htmlFor='Username' className='flex justify-start py-1'>
                   Username
@@ -208,8 +164,8 @@ export function TabsDemo() {
                 <Input
                   id='Username'
                   type='text'
-                  value={userName2}
-                  onChange={(e) => setUserName2(e.target.value)}
+                  value={username2}
+                  onChange={(e) => setUsername2(e.target.value)}
                 />
               </div>
               <div className='space-y-1'>

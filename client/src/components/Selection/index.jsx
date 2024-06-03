@@ -17,7 +17,7 @@ const Selection = () => {
 
   let filterOptions = ["fresher", "Student", "1yr Exp", "2yr Exp", "3yr Exp"];
   return (
-    <ScrollArea className="h-[90vh] overflow-auto">
+    <ScrollArea className="h-[100vh] overflow-auto">
       <Tabs defaultValue="application">
         <div className='flex mb-4'>
           <TabsList  className='flex gap-1 w-auto  justify-start'>
@@ -63,7 +63,7 @@ const Selection = () => {
           </div>
         </div>
         <TabsContent value='application'>
-          <div className='flex flex-wrap  gap-3'>
+          <div className='flex flex-wrap justify-center sm:justify-start gap-3'>
             <SelectionCard tab={tabValue} />
             <SelectionCard tab={tabValue} />
             <SelectionCard tab={tabValue} />
@@ -83,7 +83,7 @@ const Selection = () => {
           </div>
         </TabsContent>
         <TabsContent value='selected'>
-          <div className='flex flex-wrap  gap-3'>
+        <div className='flex flex-wrap justify-center sm:justify-start gap-3'>
             <SelectionCard />
             <SelectionCard />
             <SelectionCard />

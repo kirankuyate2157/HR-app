@@ -25,10 +25,9 @@ const Employee = () => {
 
   let filterOptions = ["fresher", "Student", "1yr Exp", "2yr Exp", "3yr Exp"];
   return (
-    <ScrollArea className="h-[90vh] overflow-auto">
-      Employee component..
+    <ScrollArea className="h-[100vh] overflow-auto">
       <div className='flex w-full  items-center justify-between space-x-4 mt-2 mb-4'>
-        <div className=' w-80  bg-white shadow-md p-1 px-2 flex items-center gap-3  border border-gray-200 rounded-lg'>
+        <div className=' md:w-80  bg-white shadow-md p-1 px-2 flex items-center gap-3  border border-gray-200 rounded-lg'>
           <div className='flex w-full text-black items-center gap-2'>
             <RiSearch2Line classNam='text-lg' />
             <input
@@ -54,7 +53,7 @@ const Employee = () => {
           />
         </div>
       </div>
-      <div className='flex flex-wrap  gap-3'>
+      <div className='flex  bg-red-200 flex-wrap justify-center sm:justify-start gap-3'>
       <EmployeeCard /> <EmployeeCard /> <EmployeeCard /> <EmployeeCard /><EmployeeCard /> <EmployeeCard /> <EmployeeCard /> <EmployeeCard />
         <EmployeeCard /> <EmployeeCard /> <EmployeeCard /> <EmployeeCard />
       </div>
