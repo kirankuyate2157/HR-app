@@ -1,4 +1,4 @@
-﻿### Develop an Angular/React application for a Human Resources department to streamline the employee
+﻿### Develop an Angular/React application for a Human Resources department to streamline the employee Task by RKS Cloud
  
 ##### GitHub repo link : https://github.com/kirankuyate2157/HR-app
 - Deployed app link (Server API, Client)
