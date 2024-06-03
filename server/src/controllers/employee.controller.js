@@ -114,5 +114,7 @@ const getAllEmployees = asyncHandler(async (req, res) => {
 
 export {
     createEmployee,
-    getEmployeeById
+    getEmployeeById,
+    getAllEmployees,
+    searchEmployees
 };

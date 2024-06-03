@@ -48,7 +48,7 @@ const registration = asyncHandler(async (req, res) => {
         $or: [{ username: adminId }, { email: adminId }],
       });
       if (!adminStatus) {
-        throw new ApiError(404, "Admin reference account not found with is admin Id 🫠 " + adminId +);
+        throw new ApiError(404, `Admin reference account not found with is admin Id ${adminId} 🫠 `);
       }
     }
   }

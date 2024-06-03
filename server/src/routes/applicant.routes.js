@@ -11,7 +11,6 @@ import {
   searchApplicants,
 } from "../controllers/applicant.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-import "../middlewares/googleAuth.middleware.js";
 
 const router = Router();
 
