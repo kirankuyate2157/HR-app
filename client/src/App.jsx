@@ -16,21 +16,22 @@ function App() {
   axios.defaults.withCredentials = true; 
   
   return (
-    <div className='flex dark p-0 m-0 w-[100vw] h-full '>
+    <div className='flex dark p-0 m-0 w-[100vw] h-[100vh] '>
       <Toaster />
 
       <Routes>
         <Route path='/auth' element={<Auth />} />
 
         <Route path='/' element={<HomeLayout />} >
-          <Route index element={<h1>hiiiiiiiiiiiiiiiiiiiiiiiiiiiiii</h1>} />
+          <Route index element={<h1>Hero inProgress...</h1>} />
           <Route path='/employee' element={<Employee />} />
           <Route path='/employee/:id' element={<Details />} />
           <Route path='/selection' element={<Selection />} />
           <Route path='/notification' element={<Notification />} />
           <Route path='/reports' element={<Forms />} />
           <Route path='/forms' element={<Forms />} />
-          <Route path='/home' element={<h1>Home</h1>} />
+          <Route path='/home' element={<h1>Home inProgress..</h1>} />
+          <Route path='/setting' element={<h1>Setting inProgress..</h1>} />
           <Route path='*' element={<h1>No content</h1>} />
         </Route>
         <Route path='*' element={<h1>No content</h1>} />

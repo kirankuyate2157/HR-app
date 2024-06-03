@@ -7,6 +7,7 @@ import { Job } from "../models/job.model.js";
 const createJob = asyncHandler(async (req, res) => {
     const { title, description, company, location, salary, jobType, applicationDeadline, skills, experienceLevel } = req.body;
 
+    console.log({ title, description, company, location, salary, jobType, applicationDeadline, skills, experienceLevel })
     if (!title || !description || !company || !location || !jobType || !skills || !experienceLevel) {
         throw new ApiError(400, "All required fields must be provided 🫠");
     }
@@ -21,7 +22,7 @@ const createJob = asyncHandler(async (req, res) => {
         salary,
         jobType,
         applicationDeadline,
-        skills,
+        skills: skills.split("-"),
         experienceLevel
     });
 
@@ -43,11 +44,11 @@ const getAllJobs = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10 } = req.query;
     const pageNumber = parseInt(page);
     const limitNumber = parseInt(limit);
-
-    const jobs = await Job.find({ userId: req.user.adminId ?? req.user.id })
-        .sort({ createdAt: -1, status: 1 })
-        .skip((pageNumber - 1) * limitNumber)
-        .limit(limitNumber);
+    console.log( req?.user?.adminId ?? req?.user?.id )
+    // const jobs = await Job.find({ userId: req?.user?.adminId ?? req?.user?.id })
+    //     .sort({ createdAt: -1, status: 1 })
+    //     .skip((pageNumber - 1) * limitNumber)
+    //     .limit(limitNumber);
 
     const totalJobs = await Job.countDocuments();
 
@@ -102,9 +103,9 @@ const searchJobs = asyncHandler(async (req, res) => {
             { location: { $regex: query, $options: "i" } }
         ]
     })
-    .sort({ createdAt: -1, status: 1 }) // Sort by createdAt descending and status ascending
-    .skip((pageNumber - 1) * limitNumber)
-    .limit(limitNumber);
+        .sort({ createdAt: -1, status: 1 }) // Sort by createdAt descending and status ascending
+        .skip((pageNumber - 1) * limitNumber)
+        .limit(limitNumber);
 
     const totalJobs = await Job.countDocuments({
         $or: [

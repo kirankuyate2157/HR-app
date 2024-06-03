@@ -22,7 +22,7 @@ const HomeLayout = () => {
           <div className='w-full  '>
             <TopBar />
             <Navbar />
-            <div className='px-2 h-full  min-h-[100vh] lg:px-10 '>
+            <div className='px-2 lg:px-10 '>
             <Outlet />
             </div>
             <MobileBar/>

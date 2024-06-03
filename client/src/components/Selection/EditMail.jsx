@@ -24,7 +24,7 @@ const EditMail = ({ open, setOpen }) => {
       <DialogContent className='dark rounded-lg sm:max-w-[425px] border-border'>
         <DialogHeader>
           <DialogTitle className='flex items-center gap-2'>Edit mail 
-          <Select>
+          <Select >
             <SelectTrigger className='w-auto h-6 text-xs bg-background max-w-[100px]'>
               <SelectValue placeholder='Custom' />
             </SelectTrigger>

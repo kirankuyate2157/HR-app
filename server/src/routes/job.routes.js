@@ -32,7 +32,7 @@ router.route("/:id").get(getJobById);
  * @desc    Get all jobs with pagination
  * @access  Public
  */
-router.route("/").get(getAllJobs);
+router.route("/").get(verifyJWT,getAllJobs);
 
 /**
  * @route   PATCH /:id
@@ -53,7 +53,7 @@ router.route("/:id").delete(verifyJWT, deleteJobById);
  * @desc    Search for jobs
  * @access  Public
  */
-router.route("/search").get(searchJobs);
+router.route("/search").get(verifyJWT,searchJobs);
 
 /**
  * @route   GET /user

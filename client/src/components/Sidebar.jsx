@@ -1,5 +1,6 @@
-import { FaBuildingColumns } from "react-icons/fa6";
+import { FaBell, FaBuilding, FaBuildingColumns, FaChartBar, FaUsers } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { SiGoogleforms } from "react-icons/si";
 const Sidebar = () => {
   return (
     <div className=''>
@@ -66,25 +67,7 @@ const Sidebar = () => {
                 to={"/employee"}
                 className='flex items-start rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='h-5 w-5'
-                  width='24'
-                  height='24'
-                  aria-hidden='true'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  stroke-width='2'
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                  className='lucide lucide-users'
-                >
-                  <path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
-                  <circle cx='9' cy='7' r='4' />
-                  <path d='M22 21v-2a4 4 0 0 0-3-3.87' />
-                  <path d='M16 3.13a4 4 0 0 1 0 7.75' />
-                </svg>
+               <FaUsers className='text-xl' />
                 <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
                   Employees
                 </span>
@@ -95,7 +78,7 @@ const Sidebar = () => {
                 to={"/selection"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
-                <FaBuildingColumns className='text-xl' />
+                <FaBuilding className='text-xl' />
                 <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
                   Selection
                 </span>
@@ -106,7 +89,7 @@ const Sidebar = () => {
                 to={"/notification"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
-                <FaBuildingColumns className='text-xl' />
+                <FaBell className='text-xl' />
                 <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
                   Notifications
                 </span>
@@ -117,7 +100,7 @@ const Sidebar = () => {
                 to={"/reports"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
-                <FaBuildingColumns className='text-xl' />
+                <FaChartBar className='text-xl' />
                 <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
                   Reports
                 </span>
@@ -128,7 +111,7 @@ const Sidebar = () => {
                 to={"/forms"}
                 className='flex items-center rounded px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-700'
               >
-                <FaBuildingColumns className='text-xl' />
+                <SiGoogleforms className='text-xl' />
                 <span className='ml-3 overflow-x-hidden  whitespace-nowrap'>
                   Forms
                 </span>
@@ -165,7 +148,7 @@ const Sidebar = () => {
           <div className='mt-auto flex'>
             <div className='flex w-full justify-between'>
               <span className='text-sm font-medium text-black dark:text-white'>
-                email@example.com
+               More..
               </span>
               <svg
                 xmlns='http://www.w3.org/2000/svg'

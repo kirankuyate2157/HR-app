@@ -2,6 +2,8 @@
 
 import { Link } from "react-router-dom";
 import { FaHome, FaUsers, FaBuilding, FaBell, FaChartBar, FaCog } from "react-icons/fa";
+import { SiGoogleforms } from "react-icons/si";
+
 
 const MobileBar = () => {
   return (
@@ -21,6 +23,9 @@ const MobileBar = () => {
       </Link>
       <Link to="/reports" className="text-center">
         <FaChartBar className="text-2xl" />
+      </Link>
+      <Link to="/forms" className="text-center">
+        <SiGoogleforms className="text-2xl" />
       </Link>
       <Link to="/setting" className="text-center">
         <FaCog className="text-2xl" />
