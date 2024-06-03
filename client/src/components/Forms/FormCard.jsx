@@ -9,6 +9,7 @@ import { showToast } from "@/utils/showToast";
 import { MdDone } from "react-icons/md";
 
 const FormCard = ({ data }) => {
+  
   const [response, setResponse] = useState(
     data?.status == "Active" ? true : false
   );
@@ -92,7 +93,7 @@ const FormCard = ({ data }) => {
   }, [showCalendar]);
 
 
-  
+
   return (
     <Card className='p-2 w-full sm:max-w-[48%] rounded-md bg-slate-900 border-gray-700'>
       <div className='w-full flex flex-col gap-3 p-2 items-from '>

@@ -15,27 +15,13 @@ import { showToast } from "./utils/showToast";
 import { getCookie } from "./utils/cookies";
 
 function App() {
-  axios.defaults.baseURL = "http://localhost:8080/api/v1"; //"https://kways-hr.onrender.com/api/v1"; //
+  axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL; 
   axios.defaults.params = {};
   axios.defaults.withCredentials = true;
-  // axios.interceptors.request.use(
-  //   (config) => {
-  //     const accessToken = getCookie("accessToken");
-  //     if (accessToken) {
-  //       config.headers.Authorization = `Bearer ${accessToken}`;
-  //     }
-  //     return config;
-  //   },
-  //   (error) => {
-  //     return Promise.reject(error);
-  //   }
-  // );
 
   const [user, setUser] = useState(null);
   const nav = useNavigate();
-  useEffect(() => {
-    console.log("cc :", getCookie("accessToken"));
-  });
+
   useEffect(() => {
     // Fetch user data from your API endpoint
     const fetchUserData = async () => {
