@@ -13,7 +13,8 @@ import axios from "axios";
 function App() {
   axios.defaults.baseURL = "http://localhost:8080/api/v1"; // "https://kways-hr.onrender.com/api/v1";
   axios.defaults.params = {};
-
+  axios.defaults.withCredentials = true; 
+  
   return (
     <div className='flex dark p-0 m-0 w-[100vw] h-full '>
       <Toaster />

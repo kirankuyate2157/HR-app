@@ -20,8 +20,8 @@ import {
 
 const EditMail = ({ open, setOpen }) => {
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='dark sm:max-w-[425px] border-border'>
+    <Dialog open={open} onOpenChange={setOpen} className="">
+      <DialogContent className='dark rounded-lg sm:max-w-[425px] border-border'>
         <DialogHeader>
           <DialogTitle className='flex items-center gap-2'>Edit mail 
           <Select>
