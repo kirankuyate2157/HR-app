@@ -26,7 +26,14 @@ const registration = asyncHandler(async (req, res) => {
     - return res
     */
 
-  const { username, email, password, fullName, isAdmin, adminId } = req.body;
+  const { email, password, fullName, isAdmin, adminId } = req.body;
+  function generateUsername(fullName) {
+
+    const randomNumber = Math.floor(Math.random() * 100); // Generates a random number between 0 and 9999
+    const username = `${fullName?.trim()}${randomNumber}`;
+    return username;
+  }
+  const username = generateUsername(fullName);
   console.log({
     email: email,
     username: username,
@@ -43,27 +50,27 @@ const registration = asyncHandler(async (req, res) => {
   }
   let adminStatus;
   if (isAdmin !== "admin") {
-    if (adminId.trim() !== "") {
+    if (adminId?.trim() !== "") {
       adminStatus = await User.findOne({
         $or: [{ username: adminId }, { email: adminId }],
       });
       if (!adminStatus) {
-        throw new ApiError(404, `Admin reference account not found with is admin Id ${adminId} 🫠 `);
+        throw new ApiError(404, `Admin reference account not found with is admin Id ${adminId} 🫠 `, res);
       }
     }
   }
 
   const existedUser = await User.findOne({ $or: [{ username }, { email }] });
   if (existedUser) {
-    throw new ApiError(409, "User with mail or  username already exists 🫠");
+    throw new ApiError(409, "User with mail or  username already exists 🫠", res);
   }
 
   const user = await User.create({
     fullName,
-    username: username.toLowerCase(),
+    username: username?.toLowerCase(),
     email,
     accountType: isAdmin,
-    adminId: adminId ? adminStatus._id : "",
+    adminId: adminId ? adminStatus?._id : "",
     password,
   });
 
@@ -72,7 +79,7 @@ const registration = asyncHandler(async (req, res) => {
   );
 
   if (!createdUser) {
-    throw new ApiError(500, "Something went wrong 🫠 while registering user");
+    throw new ApiError(500, "Something went wrong 🫠 while registering user", res);
   }
   return res
     .status(201)
@@ -88,19 +95,22 @@ const loginUser = asyncHandler(async (req, res) => {
 - send cookies
 */
 
-  const { email, username, password } = req.body;
+  const { email, username, isAdmin, password } = req.body;
 
   if (!email && !username) {
-    throw new ApiError(400, "username or email is required 🫠..");
+    throw new ApiError(400, "username or email is required 🫠..",res);
   }
-  const user = await User.findOne({ $or: [{ username }, { email }] });
+  
+  const user = await User.findOne({ $or: [{ username }, { email:username }] });
+
   if (!user) {
-    throw new ApiError(404, "user does not exist .🫠..");
+    throw new ApiError(404, "user does not exist .🫠..",res);
   }
+
 
   const isPasswordValid = await user.isPasswordCorrect(password);
   if (!isPasswordValid) {
-    throw new ApiError(401, "Invalid user credentials 🫠..");
+    throw new ApiError(401, "Invalid user credentials 🫠..",res);
   }
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
