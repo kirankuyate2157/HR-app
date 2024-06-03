@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { registerUser } from "./utils/authApi.js";
-import { showToast } from "../../utils/showToast";
+import { showToast } from "../../utils/showToast.jsx";
 
 function Register({ open, setOpen, isAdmin }) {
   const [fullName, setFullName] = useState("");

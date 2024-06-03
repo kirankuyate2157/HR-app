@@ -12,11 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { loginUser } from "./utils/authApi.js";
-import { showToast } from "../../utils/showToast";
-import Register from "./Register";
+import { showToast } from "../../utils/showToast.jsx";
+import Register from "./Register.jsx";
 import { useNavigate } from "react-router";
 
-export function Auth() {
+export default function AuthPage() {
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

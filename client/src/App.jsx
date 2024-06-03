@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router";
-import { Auth } from "./components/Auth/Auth";
+import AuthPage  from "./components/AuthPage";
 import { Toaster } from "@/components/ui/sonner";
 import HomeLayout from "./layouts/HomeLayout";
 import Employee from "./components/Employee";
@@ -41,10 +41,10 @@ function App() {
       <Toaster />
 
       <Routes>
-        <Route path='/auth' element={<Auth />} />
+        <Route path='/auth' element={<AuthPage />} />
 
         <Route path='/' element={<HomeLayout />}>
-          <Route path='/sign' element={<Auth />} />
+          <Route path='/sign' element={<AuthPage />} />
           <Route index element={<h1>Hero inProgress...</h1>} />
           <Route path='/employee' element={<Employee />} />
           <Route path='/employee/:id' element={<Details />} />
