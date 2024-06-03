@@ -182,6 +182,66 @@ const searchApplicants = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, { applicants, pagination: paginationInfo }, "Applicants fetched successfully ✅"));
 });
 
+// Update application status and send email
+const updateApplicationStatus = asyncHandler(async (req, res) => {
+    const { applicantId, status } = req.body;
+
+    const applicant = await Applicant.findById(applicantId);
+    if (!applicant) {
+        throw new ApiError(404, "Applicant not found 🫠");
+    }
+
+    const job = await Job.findById(applicant.jobId);
+    if (!job) {
+        throw new ApiError(404, "Job not found 🫠");
+    }
+
+    // Check authorization
+    if (req.user._id.toString() !== job.JobBy.toString() && req.user.adminId !== job.JobBy.toString()) {
+        throw new ApiError(403, "You are not authorized to update this application status 🫠");
+    }
+
+    const statusUpdate = {
+        status,
+        updatedBy: req.user._id
+    };
+
+    applicant.selectionStatus.push(statusUpdate);
+    await applicant.save();
+
+    // Send email based on status
+    let emailSubject, emailBody;
+    switch (status) {
+        case 'Accepted':
+            emailSubject = 'Application Accepted';
+            emailBody = 'Congratulations! Your application has been accepted.';
+            break;
+        case 'Assessment':
+            emailSubject = 'Assessment Scheduled';
+            emailBody = 'You have been scheduled for an assessment.';
+            break;
+        case 'Technical Interview':
+            emailSubject = 'Technical Interview Scheduled';
+            emailBody = 'You have been scheduled for a technical interview.';
+            break;
+        case 'HR Round':
+            emailSubject = 'HR Round Scheduled';
+            emailBody = 'You have been scheduled for an HR round.';
+            break;
+        case 'Offer':
+            emailSubject = 'Job Offer';
+            emailBody = 'We are pleased to offer you the position.';
+            break;
+        default:
+            emailSubject = 'Application Status Updated';
+            emailBody = `Your application status has been updated to: ${status}`;
+    }
+
+    // await sendEmail(applicant.email, emailSubject, emailBody);
+
+    return res.status(200).json(new ApiResponse(200, applicant, "Application status updated successfully ✅"));
+});
+
 export {
     createApplicant,
     getAllApplicants,

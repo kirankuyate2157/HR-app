@@ -21,6 +21,12 @@ const experienceSchema = new mongoose.Schema({
     description: { type: String }
 });
 
+const statusUpdateSchema = new mongoose.Schema({
+    status: { type: String, required: true },
+    updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    timestamp: { type: Date, default: Date.now }
+});
+
 // Schema for link
 const linkSchema = new mongoose.Schema({
     type: { type: String, required: true }, // e.g., LinkedIn, GitHub
@@ -42,6 +48,8 @@ const applicantSchema = new mongoose.Schema({
     resume: { type: String },
     coverLetter: { type: String },
     additionalInfo: { type: String },
+    selectionStatus: { type: [statusUpdateSchema], default: [] },
+    isConvertedToEmployee: { type: Boolean, default: false },
 }, { timestamps: true });
 
 

@@ -19,13 +19,20 @@ app.use(cookieParser()); //cookie  set get operations
 
 //routes
 //routes import
-// import userRouter from "./routes/user.routes.js";
-// import healthCheckRouter from "./routes/healthcheck.routes.js";
-// import s3Router from "./routes/s3.routes.js";
+import userRouter from "./routes/user.routes.js";
+import healthCheckRouter from "./routes/healthcheck.routes.js";
+import s3Router from "./routes/s3.routes.js";
+import applicantRouter from "./routes/applicant.routes.js";
+import employeeRouter from "./routes/employee.routes.js";
+import jobRouter from "./routes/job.routes.js";
+
 //routes declaration
-// app.use("/api/v1/healthcheck", healthCheckRouter);
-// app.use("/api/v1/users", userRouter);
-// app.use("/api/v1/s3", s3Router);
+app.use("/api/v1/healthcheck", healthCheckRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/s3", s3Router);
+app.use("/api/v1/applicant", applicantRouter);
+app.use("/api/v1/employee", employeeRouter);
+app.use("/api/v1/job", jobRouter);
 
 app.get("/", (req, res) => {
   res.send("hey i back end api started now testing .... 🍻⏳");
