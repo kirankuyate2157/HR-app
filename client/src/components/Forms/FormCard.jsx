@@ -4,28 +4,63 @@ import { Switch } from "@/components/ui/switch";
 import { Calendar } from "@/components/ui/calendar"; // Adjust the path as needed
 import { format } from "date-fns";
 import LinesEllipsis from "react-lines-ellipsis";
+import { updateJob } from "./utils/apis";
+import { showToast } from "@/utils/showToast";
+import { MdDone } from "react-icons/md";
 
-const FormCard = () => {
-  const [response, setResponse] = useState(true);
+const FormCard = ({ data }) => {
+  const [response, setResponse] = useState(
+    data?.status == "Active" ? true : false
+  );
   const [dateRange, setDateRange] = useState({
-    from: new Date(),
-    to: new Date(),
+    from: data?.createdAt || new Date.now(),
+    to: data?.applicationDeadline || new Date.now(),
   });
+  const [dateUpdated, setDateUpdated] = useState(false);
+
   const [showCalendar, setShowCalendar] = useState(false);
   const calendarRef = useRef(null);
 
-  const handleSelect = (date) => {
-    console.log("date slected : ", date);
-    // if (!dateRange.from || (dateRange.from && dateRange.to)) {
-    //   setDateRange({ from: date, to: null });
-    // } else if (dateRange.from && !dateRange.to) {
-    //   if (date < dateRange.from) {
-    //     setDateRange({ from: date, to: dateRange.from });
-    //   } else {
-    //     setDateRange({ ...dateRange, to: date });
-    //   }
-    //   setShowCalendar(false); // Close calendar after selecting end date
-    // }
+  const updateResponse = async (newResponse) => {
+    if (new Date(dateRange?.to).toISOString() < data?.applicationDeadline) {
+      showToast("Form expired !");
+      return;
+    }
+    setResponse(newResponse);
+
+    const res = await updateJob(data?._id, {
+      status: newResponse ? "Active" : "Closed",
+    });
+    if (res) showToast(`${data?.JobId} ${res?.message}` || "daedline updated");
+  };
+  const updatedLine = async () => {
+    const date = new Date(dateRange?.to);
+    // Convert to ISO 8601 string
+    let isoDate = date.toISOString();
+
+    if (data?.createdAt >= isoDate) {
+      setDateRange({ ...dateRange, to: data.applicationDeadline });
+      return;
+    }
+
+    console.log(
+      "updating date range from ",
+      data.applicationDeadline,
+      " to: ",
+      isoDate
+    );
+    const updatedDate = await updateJob(data?._id, {
+      applicationDeadline: isoDate,
+    });
+    if (updatedDate) {
+      setDateUpdated(false);
+      console.log(updatedDate);
+      setDateRange({
+        ...dateRange,
+        to: updatedDate?.data?.applicationDeadline,
+      });
+      showToast(`${data?.JobId} ${updatedDate.message}` || "daedline updated");
+    }
   };
 
   const toggleCalendar = () => {
@@ -50,25 +85,35 @@ const FormCard = () => {
     if (from && !to) return `${format(from, "MMM dd")}`;
     return `${format(from, "MMM dd")} - ${format(to, "MMM dd")}`;
   };
+  useEffect(() => {
+    if (new Date(dateRange?.to).toISOString() != data?.applicationDeadline)
+      setDateUpdated(() => true);
+    else setDateUpdated(false);
+  }, [showCalendar]);
 
+
+  
   return (
     <Card className='p-2 w-full sm:max-w-[48%] rounded-md bg-slate-900 border-gray-700'>
       <div className='w-full flex flex-col gap-3 p-2 items-from '>
         <div className='w-full flex items-center justify-between gap-2'>
           <h2 className='w-full flex flex-wrap text-start'>
             <LinesEllipsis
-              text={`Hiring SDE role (Fresher)`}
+              text={data?.title || "title not specified"}
               maxLine={1}
               ellipsis='...'
               trimRight
               basedOn='words'
             />
           </h2>
-          <p>:::</p>
+          <div className='flex gap-2 justify-end items-center'>
+            <p className='p-1  rounded text-xs bg-slate-700'>{data?.JobId}</p>
+            <p>:::</p>
+          </div>
         </div>
         <p className='w-full text-sm flex flex-wrap text-start'>
           <LinesEllipsis
-            text={`I have created portfolio to Increase my work online better presence so i can get more outputs.. try now I have created portfolio to Increase my work online better presence so i can get more outputs.. try now `}
+            text={data?.description || "description not specified"}
             maxLine={2}
             ellipsis='...'
             trimRight
@@ -76,8 +121,16 @@ const FormCard = () => {
           />
         </p>
         <div className='w-full flex justify-between items-center'>
-          <h6 onClick={toggleCalendar} className='cursor-pointer'>
-            {formatDateRange(dateRange.from, dateRange.to)}
+          <h6 className='cursor-pointer flex items-center gap-2'>
+            <span onClick={toggleCalendar}>
+              {formatDateRange(dateRange.from, dateRange.to)}
+            </span>{" "}
+            {dateUpdated && (
+              <MdDone
+                onClick={updatedLine}
+                className='text-lg bg-orange-900 rounded-lg'
+              />
+            )}
           </h6>
           {showCalendar && (
             <div
@@ -97,7 +150,9 @@ const FormCard = () => {
             <Switch
               className='bg-red-500'
               checked={response}
-              onCheckedChange={() => setResponse(!response)}
+              onCheckedChange={() => {
+                updateResponse(!response);
+              }}
             />
           </div>
         </div>

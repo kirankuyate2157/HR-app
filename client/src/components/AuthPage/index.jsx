@@ -15,6 +15,7 @@ import { loginUser } from "./utils/authApi.js";
 import { showToast } from "../../utils/showToast.jsx";
 import Register from "./Register.jsx";
 import { useNavigate } from "react-router";
+import BackButton from "../BackButton.jsx";
 
 export default function AuthPage() {
   const [open, setOpen] = useState(false);
@@ -28,8 +29,9 @@ export default function AuthPage() {
   const handleLoginSubmit = async () => {
     try {
       const userData = { username, password };
-      await loginUser(userData);
+      const user = await loginUser(userData);
       showToast("Logged in successfully", "success");
+      localStorage.setItem("accessToken", user.accessToken);
       nav("/home");
     } catch (error) {
       showToast(error, "error");
@@ -43,7 +45,8 @@ export default function AuthPage() {
         password: password2,
         isAdmin: "admin",
       };
-      await loginUser(userData);
+      const user = await loginUser(userData);
+      localStorage.setItem("accessToken", user.accessToken);
       showToast("Logged in successfully", "success");
       nav("/home");
     } catch (error) {
@@ -53,6 +56,7 @@ export default function AuthPage() {
 
   return (
     <div className='flex flex-col space-y-5 w-full justify-center items-center'>
+      <BackButton />
       <Register open={open} setOpen={setOpen} isAdmin={tabValue} />
       <div>
         <h2 className='capitalize font-mono text-3xl'>Hiring Platform</h2>

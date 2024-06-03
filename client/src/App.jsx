@@ -12,27 +12,43 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { currentUser } from "./utils/apis";
 import { showToast } from "./utils/showToast";
+import { getCookie } from "./utils/cookies";
 
 function App() {
-  axios.defaults.baseURL = "https://kways-hr.onrender.com/api/v1"; //"http://localhost:8080/api/v1";
+  axios.defaults.baseURL = "http://localhost:8080/api/v1"; //"https://kways-hr.onrender.com/api/v1"; //
   axios.defaults.params = {};
   axios.defaults.withCredentials = true;
+  // axios.interceptors.request.use(
+  //   (config) => {
+  //     const accessToken = getCookie("accessToken");
+  //     if (accessToken) {
+  //       config.headers.Authorization = `Bearer ${accessToken}`;
+  //     }
+  //     return config;
+  //   },
+  //   (error) => {
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   const [user, setUser] = useState(null);
   const nav = useNavigate();
+  useEffect(() => {
+    console.log("cc :", getCookie("accessToken"));
+  });
   useEffect(() => {
     // Fetch user data from your API endpoint
     const fetchUserData = async () => {
       try {
         const userData = await currentUser(); // Adjust the URL to your API endpoint
         setUser(userData);
-        if (!userData || !user) {
+        if (!userData) {
           nav("/auth");
           return;
         }
         console.log("user data : ", userData);
       } catch (error) {
-        showToast(error.message);
+        showToast(error.message || "unauthorized or Something went wrong ");
         console.error("Error fetching user data:", error);
         nav("/auth");
       }
@@ -46,25 +62,25 @@ function App() {
 
       <Routes>
         <Route path='/auth' element={<AuthPage />} />
-
-        <Route path='/' element={<HomeLayout />}>
-          <Route path='/sign' element={<AuthPage />} />
-          <Route index element={<h1>Hero inProgress...</h1>} />
-          <Route path='/employee' element={<Employee />} />
-          <Route path='/employee/:id' element={<Details />} />
-          <Route path='/selection' element={<Selection />} />
-          <Route path='/notification' element={<Notification />} />
-          <Route path='/reports' element={<Forms />} />
-          <Route path='/forms' element={<Forms />} />
-          <Route path='/home' element={<h1>Home inProgress..</h1>} />
-          <Route
-            path='/setting'
-            element={
-              <div onClick={() => nav("/auth")}>Setting inProgress..</div>
-            }
-          />
-          <Route path='*' element={<h1>No content</h1>} />
-        </Route>
+        {user && (
+          <Route path='/' element={<HomeLayout />}>
+            <Route index element={<h1>Hero inProgress...</h1>} />
+            <Route path='/employee' element={<Employee />} />
+            <Route path='/employee/:id' element={<Details />} />
+            <Route path='/selection' element={<Selection />} />
+            <Route path='/notification' element={<Notification />} />
+            <Route path='/reports' element={<Forms />} />
+            <Route path='/forms' element={<Forms />} />
+            <Route path='/home' element={<h1>Home inProgress..</h1>} />
+            <Route
+              path='/setting'
+              element={
+                <div onClick={() => nav("/auth")}>Setting inProgress..</div>
+              }
+            />
+            <Route path='*' element={<h1>No content</h1>} />
+          </Route>
+        )}
         <Route path='*' element={<h1>No content</h1>} />
       </Routes>
     </div>

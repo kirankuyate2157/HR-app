@@ -9,7 +9,7 @@ const createJob = asyncHandler(async (req, res) => {
 
     console.log({ title, description, company, location, salary, jobType, applicationDeadline, skills, experienceLevel })
     if (!title || !description || !company || !location || !jobType || !skills || !experienceLevel) {
-        throw new ApiError(400, "All required fields must be provided 🫠");
+        throw new ApiError(400, "All required fields must be provided 🫠",res);
     }
 
     const job = new Job({
@@ -34,7 +34,7 @@ const createJob = asyncHandler(async (req, res) => {
 const getJobById = asyncHandler(async (req, res) => {
     const job = await Job.findById(req.params.id);
     if (!job) {
-        throw new ApiError(404, "Job not found 🫠");
+        throw new ApiError(404, "Job not found 🫠",res);
     }
     return res.status(200).json(new ApiResponse(200, job, "Job fetched successfully ✅"));
 });
@@ -45,10 +45,10 @@ const getAllJobs = asyncHandler(async (req, res) => {
     const pageNumber = parseInt(page);
     const limitNumber = parseInt(limit);
     console.log( req?.user?.adminId ?? req?.user?.id )
-    // const jobs = await Job.find({ userId: req?.user?.adminId ?? req?.user?.id })
-    //     .sort({ createdAt: -1, status: 1 })
-    //     .skip((pageNumber - 1) * limitNumber)
-    //     .limit(limitNumber);
+    const jobs = await Job.find({ userId: req?.user?.adminId ?? req?.user?.id })
+        .sort({ createdAt: -1, status: 1 })
+        .skip((pageNumber - 1) * limitNumber)
+        .limit(limitNumber);
 
     const totalJobs = await Job.countDocuments();
 
@@ -74,7 +74,7 @@ const updateJobById = asyncHandler(async (req, res) => {
     );
 
     if (!updatedJob) {
-        throw new ApiError(404, "Job not found 🫠");
+        throw new ApiError(404, "Job not found 🫠",res);
     }
 
     return res.status(200).json(new ApiResponse(200, updatedJob, "Job updated successfully ✅"));
@@ -84,7 +84,7 @@ const updateJobById = asyncHandler(async (req, res) => {
 const deleteJobById = asyncHandler(async (req, res) => {
     const job = await Job.findByIdAndDelete(req.params.id);
     if (!job) {
-        throw new ApiError(404, "Job not found 🫠");
+        throw new ApiError(404, "Job not found 🫠",res);
     }
     return res.status(200).json(new ApiResponse(200, {}, "Job deleted successfully ✅"));
 });
@@ -136,7 +136,7 @@ const getJobsByUser = asyncHandler(async (req, res) => {
 const applyForJob = asyncHandler(async (req, res) => {
     const job = await Job.findById(req.params.id);
     if (!job) {
-        throw new ApiError(404, "Job not found 🫠");
+        throw new ApiError(404, "Job not found 🫠",res);
     }
 
     // Assuming you have a way to add an application to the job

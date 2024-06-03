@@ -15,13 +15,13 @@ const Forms = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const launchesPerPage = 16;
   const [tabValue, setTabValue] = useState("forms");
-  const [alljob, setAllJob] = useState(null);
+  const [allJob, setAllJob] = useState([]);
   useEffect(() => {
     const fetchAllJob = async () => {
       const jobs = await getAllJob();
-      setAllJob(jobs);
+      setAllJob(jobs.jobs);
       showToast(jobs.message);
-      console.log("jobs : ",jobs);
+      console.log("jobs : ", jobs.jobs);
     };
 
     fetchAllJob();
@@ -47,7 +47,8 @@ const Forms = () => {
         </div>
         <TabsContent value='forms'>
           <div className='w-full flex flex-wrap  gap-3'>
-            <FormCard /> <FormCard /> <FormCard /> <FormCard />
+            {allJob?.length > 0 &&
+              allJob?.map((job, index) => <FormCard data={job} key={index} />)}
           </div>
         </TabsContent>
         <TabsContent value='new'>
@@ -56,11 +57,19 @@ const Forms = () => {
           </div>
         </TabsContent>
         <TabsContent value='active'>
-          <div className='flex flex-wrap  gap-3'>Previous forms</div>
+        <div className='w-full flex flex-wrap  gap-3'>
+            {allJob?.length > 0 &&
+              allJob?.filter((item)=>item.status=="Active")
+              .map((job, index) => <FormCard data={job} key={index} />)}
+          </div>
         </TabsContent>
         <TabsContent value='close'>
-          <div className='flex flex-wrap  gap-3'>Generate new forms</div>
-        </TabsContent>
+        <div className='w-full flex flex-wrap  gap-3'>
+            {allJob?.length > 0 &&
+              allJob?.filter((item)=>item.status=="Closed")
+              .map((job, index) => <FormCard data={job} key={index} />)}
+          </div>
+           </TabsContent>
       </Tabs>
     </ScrollArea>
   );
