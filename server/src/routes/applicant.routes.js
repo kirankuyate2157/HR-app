@@ -9,6 +9,7 @@ import {
   deleteApplicant,
   getAllApplicantsByMail,
   searchApplicants,
+  getAllApplicantsByJobId,
 } from "../controllers/applicant.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -23,13 +24,22 @@ const router = Router();
 router.route("/").post( createApplicant);
 
 /**
+ * @route   GET /applicants/
+ * @desc    Get all applicants for a specific job with pagination and sorting
+ * @access  Private
+ * @query   page, limit, sortBy, sortOrder
+ * @param   jobId
+ */
+router.route("/").get(verifyJWT, getAllApplicants);
+
+/**
  * @route   GET /applicants/job/:jobId
  * @desc    Get all applicants for a specific job with pagination and sorting
  * @access  Private
  * @query   page, limit, sortBy, sortOrder
  * @param   jobId
  */
-router.route("/job/:jobId").get(verifyJWT, getAllApplicants);
+router.route("/job/:jobId").get(verifyJWT, getAllApplicantsByJobId);
 
 /**
  * @route   GET /applicants/email/:email
@@ -54,7 +64,7 @@ router.route("/search").get(verifyJWT, searchApplicants);
  * @access  Private
  * @param   id
  */
-router.route("/:id").get(verifyJWT, getApplicantById);
+router.route("/:id").get( getApplicantById);
 
 /**
  * @route   PATCH /applicants/:id

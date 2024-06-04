@@ -77,7 +77,7 @@ const createApplicant = asyncHandler(async (req, res) => {
 });
 
 // Get all applicants by job ID with pagination and sorting
-const getAllApplicants = asyncHandler(async (req, res) => {
+const getAllApplicantsByJobId = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
     const skip = (page - 1) * limit;
     const { jobId } = req.params;
@@ -92,6 +92,29 @@ const getAllApplicants = asyncHandler(async (req, res) => {
         .limit(parseInt(limit));
 
     const total = await Applicant.countDocuments({ jobId });
+
+    const paginationInfo = {
+        totalItems: total,
+        totalPages: Math.ceil(total / limit),
+        currentPage: parseInt(page),
+        itemsPerPage: parseInt(limit),
+    };
+
+    return res.status(200).json(new ApiResponse(200, { applicants, pagination: paginationInfo }, "Applicants fetched successfully ✅"));
+});
+
+// Get all applicants by job ID with pagination and sorting
+const getAllApplicants = asyncHandler(async (req, res) => {
+    const { page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
+    const skip = (page - 1) * limit;
+
+
+    const applicants = await Applicant.find()
+        .sort({ [sortBy]: sortOrder })
+        .skip(skip)
+        .limit(parseInt(limit));
+
+    const total = await Applicant.countDocuments();
 
     const paginationInfo = {
         totalItems: total,
@@ -269,6 +292,7 @@ export {
     updateApplicant,
     deleteApplicant,
     getAllApplicantsByMail,
-    searchApplicants
+    searchApplicants,
+    getAllApplicantsByJobId
 };
 
