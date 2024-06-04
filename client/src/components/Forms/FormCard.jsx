@@ -7,9 +7,9 @@ import LinesEllipsis from "react-lines-ellipsis";
 import { updateJob } from "./utils/apis";
 import { showToast } from "@/utils/showToast";
 import { MdDone } from "react-icons/md";
-
+import { FaRegCopy } from "react-icons/fa";
+import { VscShare } from "react-icons/vsc";
 const FormCard = ({ data }) => {
-  
   const [response, setResponse] = useState(
     data?.status == "Active" ? true : false
   );
@@ -74,6 +74,14 @@ const FormCard = ({ data }) => {
     }
   };
 
+  const [isTextCopy, setIsTextCopy] = useState(false);
+  const copyInterval = () => {
+    setIsTextCopy(true);
+    showToast("Job URL copied into clipboard");
+    setTimeout(() => {
+      setIsTextCopy(false);
+    }, 7000);
+  };
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -91,8 +99,6 @@ const FormCard = ({ data }) => {
       setDateUpdated(() => true);
     else setDateUpdated(false);
   }, [showCalendar]);
-
-
 
   return (
     <Card className='p-2 w-full sm:max-w-[48%] rounded-md bg-slate-900 border-gray-700'>
@@ -146,7 +152,31 @@ const FormCard = ({ data }) => {
               />
             </div>
           )}
-          <div className='flex gap-2 justify-end'>
+          <div className='flex gap-4 justify-end items-center '>
+            <span className='flex gap-1 cursor-pointer items-center'>
+              <FaRegCopy
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${import.meta.env.VITE_APP_URL}/applicant/job/${
+                      data?.JobId
+                    }`
+                  );
+                  copyInterval();
+                }}
+                className={` ${
+                  isTextCopy ? "text-green-400" : " text-gray-300"
+                }`}
+              />{" "}
+              <a
+                href={`${import.meta.env.VITE_APP_URL}/applicant/job/${
+                  data?.JobId
+                }`}
+                target='_blank_'
+                rel='noopener noreferrer'
+              >
+                <VscShare />
+              </a>
+            </span>
             <h6>{`${response ? "active" : "close"}`}</h6>
             <Switch
               className='bg-red-500'

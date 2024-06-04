@@ -53,7 +53,7 @@ const getJobStatusById = asyncHandler(async (req, res) => {
         return res.status(200).json(new ApiResponse(200, { response: false, status: job.status, applicationDeadline: job.applicationDeadline, message: "Job deadline Expired 💝" }, "Job deadline Expired 💝"));
     }
 
-    return res.status(200).json(new ApiResponse(200, { response: true, status: job.status, applicationDeadline: job.applicationDeadline, message: "Job fetched successfully ✅" }, "Job fetched successfully ✅"));
+    return res.status(200).json(new ApiResponse(200, { response: true, ...job, message: "Job fetched successfully ✅" }, "Job fetched successfully ✅"));
 });
 
 // Get all jobs with pagination
