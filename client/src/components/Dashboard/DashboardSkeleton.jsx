@@ -1,6 +1,6 @@
 const DashboardSkeleton = () => {
   return (
-    <div className='w-full pb-20  flex flex-col h-[100vh] overflow-auto'>
+    <div className='w-full  mb-20 flex flex-col h-[100vh]'>
       <div className='flex max-w-full max-h-[300px] flex-col sm:flex-row px-4 my-2 gap-3'>
         <div
           className={`w-full bg-gray-900 rounded-md animate-pulse`}
