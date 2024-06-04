@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { currentUser } from "./utils/apis";
 import { showToast } from "./utils/showToast";
 import { getCookie } from "./utils/cookies";
+import Applicant from "./components/Applicant";
 
 function App() {
   axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL; 
@@ -48,6 +49,7 @@ function App() {
 
       <Routes>
         <Route path='/auth' element={<AuthPage />} />
+        <Route path='/applicant/job/:id' element={<Applicant />} />
         {user && (
           <Route path='/' element={<HomeLayout />}>
             <Route index element={<h1>Hero inProgress...</h1>} />
@@ -55,7 +57,7 @@ function App() {
             <Route path='/employee/:id' element={<Details />} />
             <Route path='/selection' element={<Selection />} />
             <Route path='/notification' element={<Notification />} />
-            <Route path='/reports' element={<Forms />} />
+            <Route path='/reports' element={<Applicant />} />
             <Route path='/forms' element={<Forms />} />
             <Route path='/home' element={<h1>Home inProgress..</h1>} />
             <Route

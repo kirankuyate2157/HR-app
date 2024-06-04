@@ -9,6 +9,7 @@ import {
   searchJobs,
   getJobsByUser,
   applyForJob,
+  getJobStatusById,
 } from "../controllers/job.controller.js";
 
 const router = Router();
@@ -26,6 +27,13 @@ router.route("/").post(verifyJWT, createJob);
  * @access  Public
  */
 router.route("/:id").get(getJobById);
+
+/**
+ * @route   GET /:id
+ * @desc    Get a job Status by ID
+ * @access  Public
+ */
+router.route("/status/:id").get(getJobStatusById);
 
 /**
  * @route   GET /

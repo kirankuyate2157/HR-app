@@ -20,7 +20,7 @@ const router = Router();
  * @access  Private
  * @body    jobId, fullName, email, phone, address, summary, skills, experience, education, links, resume, coverLetter, additionalInfo
  */
-router.route("/").post(verifyJWT, createApplicant);
+router.route("/").post( createApplicant);
 
 /**
  * @route   GET /applicants/job/:jobId

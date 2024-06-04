@@ -6,6 +6,17 @@ import { Button } from "../ui/button";
 import SelectionCard from "./SelectionCard";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+
 const Selection = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState(null);
@@ -17,7 +28,7 @@ const Selection = () => {
 
   let filterOptions = ["fresher", "Student", "1yr Exp", "2yr Exp", "3yr Exp"];
   return (
-    <ScrollArea className="h-[100vh] px-2 xs:px-4 sm:px-8 lg:px-0 overflow-auto">
+    <ScrollArea className="h-[100vh] pb-24 px-2 xs:px-4 sm:px-8 lg:px-0 overflow-auto">
       <Tabs defaultValue="application">
         <div className='flex my-4'>
           <TabsList  className='flex gap-1 w-auto  justify-start'>
@@ -92,6 +103,24 @@ const Selection = () => {
           </div>
         </TabsContent>
       </Tabs>
+      <div className='my-6 overflow-hidden'>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href='#' />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href='#'>1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href='#' />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
     </ScrollArea>
   );
 };

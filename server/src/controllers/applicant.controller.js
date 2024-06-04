@@ -4,9 +4,11 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Applicant } from "../models/applicant.model.js";
 import { Job } from "../models/job.model.js";
+import { resolveContent } from "nodemailer/lib/shared/index.js";
 
 // Create a new applicant and update the job's applications array
 const createApplicant = asyncHandler(async (req, res) => {
+    console.log("createApplicant : " + req.body);
     const {
         jobId,
         fullName,
@@ -19,27 +21,46 @@ const createApplicant = asyncHandler(async (req, res) => {
         education,
         links,
         resume,
+        photo,
         coverLetter,
         additionalInfo
     } = req.body;
 
-    const job = await Job.findById(jobId);
-    if (!job) {
-        throw new ApiError(404, "Job not found 🫠");
-    }
 
-    const newApplicant = new Applicant({
-        jobId,
+    const job = await Job.findOne({ JobId: jobId });
+    if (!job) {
+        throw new ApiError(404, "Job not found 🫠", res);
+    }
+    console.log(job)
+    console.log({
+        jobId: job._id,
         fullName,
         email,
         phone,
         address,
         summary,
-        skills,
+        skills: skills?.split('-'),
         experience,
         education,
-        links,
+        links: links?.trim()?.split('|').map(link => ({ type: 'Link', url: link })), // Ensure links are stored as an array of objects
         resume,
+        photo,
+        coverLetter,
+        additionalInfo
+    })
+    const newApplicant = new Applicant({
+        jobId: job._id,
+        fullName,
+        email,
+        phone,
+        address,
+        summary,
+        skills: skills?.split('-'),
+        experience,
+        education,
+        links: links.trim().split('|').map(link => ({ type: 'Link', url: link })), // Ensure links are stored as an array of objects
+        resume,
+        photo,
         coverLetter,
         additionalInfo
     });
@@ -52,7 +73,6 @@ const createApplicant = asyncHandler(async (req, res) => {
         appliedDate: new Date()
     });
     await job.save();
-
     return res.status(201).json(new ApiResponse(201, savedApplicant, "Applicant created successfully ✅"));
 });
 
@@ -63,7 +83,7 @@ const getAllApplicants = asyncHandler(async (req, res) => {
     const { jobId } = req.params;
 
     if (!jobId) {
-        throw new ApiError(404, "Job ID required 🫠");
+        throw new ApiError(404, "Job ID required 🫠", res);
     }
 
     const applicants = await Applicant.find({ jobId })
@@ -90,7 +110,7 @@ const getAllApplicantsByMail = asyncHandler(async (req, res) => {
     const skip = (page - 1) * limit;
 
     if (!email) {
-        throw new ApiError(404, "Email required 🫠");
+        throw new ApiError(404, "Email required 🫠", res);
     }
 
     const applicants = await Applicant.find({ email })
@@ -115,7 +135,7 @@ const getApplicantById = asyncHandler(async (req, res) => {
     const applicant = await Applicant.findById(id);
 
     if (!applicant) {
-        throw new ApiError(404, "Applicant not found 🫠");
+        throw new ApiError(404, "Applicant not found 🫠", res);
     }
 
     return res.status(200).json(new ApiResponse(200, applicant, "Applicant fetched successfully ✅"));
@@ -132,7 +152,7 @@ const updateApplicant = asyncHandler(async (req, res) => {
     );
 
     if (!updatedApplicant) {
-        throw new ApiError(404, "Applicant not found 🫠");
+        throw new ApiError(404, "Applicant not found 🫠", res);
     }
 
     return res.status(200).json(new ApiResponse(200, updatedApplicant, "Applicant updated successfully ✅"));
@@ -144,7 +164,7 @@ const deleteApplicant = asyncHandler(async (req, res) => {
     const deletedApplicant = await Applicant.findByIdAndDelete(id);
 
     if (!deletedApplicant) {
-        throw new ApiError(404, "Applicant not found 🫠");
+        throw new ApiError(404, "Applicant not found 🫠", res);
     }
 
     return res.status(200).json(new ApiResponse(200, {}, "Applicant deleted successfully ✅"));
@@ -188,12 +208,12 @@ const updateApplicationStatus = asyncHandler(async (req, res) => {
 
     const applicant = await Applicant.findById(applicantId);
     if (!applicant) {
-        throw new ApiError(404, "Applicant not found 🫠");
+        throw new ApiError(404, "Applicant not found 🫠", res);
     }
 
     const job = await Job.findById(applicant.jobId);
     if (!job) {
-        throw new ApiError(404, "Job not found 🫠");
+        throw new ApiError(404, "Job not found 🫠", res);
     }
 
     // Check authorization

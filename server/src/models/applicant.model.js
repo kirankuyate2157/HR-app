@@ -46,6 +46,7 @@ const applicantSchema = new mongoose.Schema({
     education: [educationSchema],
     links: [linkSchema],
     resume: { type: String },
+    photo: { type: String },
     coverLetter: { type: String },
     additionalInfo: { type: String },
     selectionStatus: { type: [statusUpdateSchema], default: [] },

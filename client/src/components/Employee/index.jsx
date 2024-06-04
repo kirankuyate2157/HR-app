@@ -25,7 +25,7 @@ const Employee = () => {
 
   let filterOptions = ["fresher", "Student", "1yr Exp", "2yr Exp", "3yr Exp"];
   return (
-    <ScrollArea className="h-[100vh] px-2 xs:px-4 sm:px-8 lg:px-0 overflow-auto">
+    <ScrollArea className="h-[100vh] pb-24 px-2 xs:px-4 sm:px-8 lg:px-0 overflow-auto">
       <div className='flex w-full  items-center justify-between space-x-4 mt-2 mb-4'>
         <div className=' md:w-80 px-5  bg-white shadow-md p-1 md:px-2 flex items-center gap-3  border border-gray-200 rounded-lg'>
           <div className='flex w-full text-black items-center gap-2'>
