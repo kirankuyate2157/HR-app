@@ -33,7 +33,6 @@ function App() {
           nav("/auth");
           return;
         }
-        console.log("user data : ", userData);
       } catch (error) {
         showToast(error.message || "unauthorized or Something went wrong ");
         console.error("Error fetching user data:", error);

@@ -42,6 +42,7 @@ const applicantSchema = new mongoose.Schema({
     address: { type: String },
     summary: { type: String },
     skills: { type: [String], required: true },
+    title:{ type: String, required: true },
     experience: [experienceSchema],
     education: [educationSchema],
     links: [linkSchema],

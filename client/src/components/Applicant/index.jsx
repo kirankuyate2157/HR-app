@@ -36,7 +36,7 @@ const Applicant = () => {
               {jobStatus?.message || "Not Found "}
             </h2>
           ) : (
-            <JobApplication jobId={id} />
+            <JobApplication jobId={id} job={jobStatus?._doc} />
           )}
         </>
       ) : (

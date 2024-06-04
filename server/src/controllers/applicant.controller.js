@@ -12,6 +12,7 @@ const createApplicant = asyncHandler(async (req, res) => {
     const {
         jobId,
         fullName,
+        title,
         email,
         phone,
         address,
@@ -36,6 +37,7 @@ const createApplicant = asyncHandler(async (req, res) => {
         jobId: job._id,
         fullName,
         email,
+        title,
         phone,
         address,
         summary,
@@ -53,6 +55,7 @@ const createApplicant = asyncHandler(async (req, res) => {
         fullName,
         email,
         phone,
+        title,
         address,
         summary,
         skills: skills?.split('-'),

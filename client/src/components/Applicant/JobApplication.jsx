@@ -6,6 +6,8 @@ import { createApplicant } from "./utils/apis.js";
 import { showToast } from "@/utils/showToast";
 import uploadDoc from "@/utils/DocUpload.js";
 import { Label } from "@/components/ui/label";
+import { Card } from "../ui/card.jsx";
+import { FaMapMarkerAlt, FaCalendarAlt, FaBriefcase } from "react-icons/fa";
 
 const ddata = {
   fullName: "Shubham Gaikwad",
@@ -55,11 +57,12 @@ const ddata = {
   coverLetter: "cover letter not want to do",
   additionalInfo: "",
 };
-const JobApplication = ({ jobId }) => {
+const JobApplication = ({ jobId,job }) => {
   // const [formData, setFormData] = useState({ ...ddata });
 
   const [formData, setFormData] = useState({
     fullName: "",
+    title: "",
     email: "",
     phone: "",
     address: "",
@@ -149,6 +152,7 @@ const JobApplication = ({ jobId }) => {
     showToast(res?.message);
     setFormData({
       fullName: "",
+      title: "",
       email: "",
       phone: "",
       address: "",
@@ -163,9 +167,39 @@ const JobApplication = ({ jobId }) => {
       additionalInfo: "",
     });
   };
-
   return (
     <div className='container max-w-[700px] mx-auto pb-20 px-4 sm:px-6 lg:px-8'>
+      
+      <Card className="w-full h-auto p-6 my-6  border-gray-700 text-white">
+        <h2 className="text-2xl font-bold mb-4">{job?.title}</h2>
+        <p className="text-gray-300 text-left mb-4">{job?.description}</p>
+
+        <div className="flex flex-wrap gap-4">
+          <div className="flex items-center gap-2">
+            <FaMapMarkerAlt className="text-lg" />
+            <span>{job?.location}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaBriefcase className="text-lg" />
+            <span>{job?.experienceLevel}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaCalendarAlt className="text-lg" />
+            <span>Deadline: {new Date(job?.applicationDeadline)?.toLocaleDateString()}</span>
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <h3 className="text-xl font-bold">Skills Required</h3>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {job?.skills?.map((skill, index) => (
+              <span key={index} className="p-1 px-2 text-sm bg-pink-900 rounded-lg">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      </Card>
       <h2 className='text-2xl font-bold pb-8'>Job Application</h2>
       <form onSubmit={handleSubmit} className='space-y-6'>
         <Input
@@ -204,6 +238,15 @@ const JobApplication = ({ jobId }) => {
           value={formData.address}
           onChange={handleChange}
           placeholder='Address'
+          required
+        />
+        <Input
+          type='text'
+          id='title'
+          name='title'
+          value={formData.title}
+          onChange={handleChange}
+          placeholder='Title or Tagline (e.g., full stack developer)'
           required
         />
         <Textarea

@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 
 const EmployeeCard = ({ data }) => {
   return (
-    <Card className='flex flex-col w-[10rem] xs:w-[11rem]   sm:w-[15rem] p-3 gap-2 overflow-hidden bg-muted border-gray-600'>
-      <div className='flex justify-center min-h-[50%]   '>
+    <Card className='flex flex-col  w-[10rem] xs:w-[11rem]   sm:w-[15rem] p-3 gap-2 overflow-hidden bg-muted border-gray-600'>
+      <div className='h-full flex flex-col gap-2 justify-between'>
+      <div className='flex justify-center h-full min-h-[50%] max-h-[75%]   '>
         <img
           src={
-            data?.photo ||
+            data?.photo?.split("?")[0] ||
             "https://avatars.githubusercontent.com/u/84271800?v=4"
           }
           alt='images'
@@ -15,8 +16,8 @@ const EmployeeCard = ({ data }) => {
         />
       </div>
 
-      <Link to={`/employee/${data?._id}`} className='w-full  rounded'>
-        <h2>{data?.fullName || "Not mentioned"}</h2>
+      <Link to={`/employee/${data?._id}`} className='w-full h-[20%] mb-3 sm:mb-0 flex flex-col justify-center  rounded'>
+        <h2 className="text-sm sm:text-lg">{data?.fullName || "Not mentioned"}</h2>
         <div className=' flex flex-col sm:flex-row justify-center text-xs text-gray-300 gap-2 sm:text-sm '>
           <p>{data?.title || "Full stack developer"}</p>
           <p>
@@ -30,6 +31,7 @@ const EmployeeCard = ({ data }) => {
           </p>
         </div>
       </Link>
+      </div>
     </Card>
   );
 };
