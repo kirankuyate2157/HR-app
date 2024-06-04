@@ -9,7 +9,6 @@ const Applicant = () => {
   const [jobStatus, setJobStatus] = useState(null);
   const [loader, setLoader] = useState(false);
   const { id } = useParams();
-  console.log(useParams());
 
   useEffect(() => {
     const fetchJobStatus = async () => {

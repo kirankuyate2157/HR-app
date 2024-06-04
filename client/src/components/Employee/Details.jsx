@@ -1,8 +1,28 @@
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { showToast } from "@/utils/showToast";
+import { getApplicationsDetails } from "./utils/apis";
+import { useParams } from "react-router";
 
 const Details = () => {
+  const [applicant, setApplicant] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      setLoader(true);
+      const applicationData = await getApplicationsDetails(id);
+      setLoader(false);
+      console.log("Application deatils :", JSON.stringify(applicationData));
+      showToast(applicationData.message || applicationData?.data?.message);
+      setApplicant(applicationData);
+    };
+    fetchApplications();
+  }, []);
+
   return (
     <ScrollArea className='p-4 mb-4  w-full h-[100vh] overflow-auto bg-gray-800 rounded '>
       <div className=''>
@@ -20,12 +40,18 @@ const Details = () => {
             alt='profile'
             className='w-48 h-48 rounded-full absolute -top-24'
           />
-          <h2 className='mt-[4rem] text-2xl font-bold'>Kiran Kuyate</h2>
+          <h2 className='mt-[4rem] text-2xl font-bold'>
+            {applicant?.fullName || "Not mentioned"}
+          </h2>
           <div className=' flex justify-center text-gray-300 gap-2 text-sm '>
             <p>Full stack developer</p>
             <p>
               <span className='bg-green-800 rounded-md px-2 p-[2px]  items-center text-center text-xs'>
-                Fresher
+                {applicant?.experience?.length >= 3
+                  ? "Fresher"
+                  : applicant?.experience?.length <= 2
+                  ? "Jr level"
+                  : "Fresher"}
               </span>
             </p>
           </div>
