@@ -11,25 +11,32 @@ import { MdOutlineDone } from "react-icons/md";
 import { MdOutgoingMail } from "react-icons/md";
 import EditMail from "./EditMail";
 import { useState } from "react";
-const SelectionCard = ({ tab }) => {
+const SelectionCard = ({ tab,data }) => {
   const [edit, setEdit] = useState(false);
   return (
     <Card className='flex flex-col w-[11rem]   sm:w-[15rem] p-3 gap-2 overflow-hidden bg-muted border-gray-600'>
       <EditMail open={edit} setOpen={() => setEdit(false)} />
-      <div className='flex justify-center  '>
+      <div className='flex justify-center h-full min-h-[50%] max-h-[75%]   '>
         <img
-          src='https://avatars.githubusercontent.com/u/84271800?v=4'
+          src={
+            data?.photo?.split("?")[0] ||
+            "https://avatars.githubusercontent.com/u/84271800?v=4"
+          }
           alt='images'
-          className='w-full bg-slate-800 max-w-64 rounded-lg'
+          className='w-full object-cover  bg-slate-700 max-w-64 rounded-lg'
         />
       </div>
       <div className='w-full   rounded'>
-        <h2>Kiran Kuyate</h2>
+      <h2 className="text-sm sm:text-lg">{data?.fullName || "Not mentioned"}</h2>
         <div className=' text-xs flex  flex-col sm:flex-row justify-center  text-gray-300 gap-2 sm:text-sm '>
-          <p>Full stack developer</p>
+        <p>{data?.title || "Full stack developer"}</p>
           <p>
             <span className='bg-green-800 rounded-md px-2 p-[2px]  items-center text-center text-xs'>
-              Fresher
+            {data?.experience?.length >= 3
+                ? "Fresher"
+                : data?.experience?.length <= 2
+                ? "Jr level"
+                : "Fresher"}
             </span>
           </p>
         </div>
@@ -37,7 +44,7 @@ const SelectionCard = ({ tab }) => {
           <div className='flex  gap-2 justify-end mt-2'>
             <Select>
               <SelectTrigger className='h-8 bg-background w-[150px]'>
-                <SelectValue placeholder='Theme' />
+                <SelectValue placeholder='Select Role' />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value='light'>SDE 1</SelectItem>

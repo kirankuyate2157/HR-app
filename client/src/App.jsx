@@ -14,6 +14,7 @@ import { currentUser } from "./utils/apis";
 import { showToast } from "./utils/showToast";
 import Applicant from "./components/Applicant";
 import { TbLoader2 } from "react-icons/tb";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
@@ -58,7 +59,7 @@ function App() {
             <Route path='/notification' element={<Notification />} />
             {/* <Route path='/reports' element={<Forms />} /> */}
             <Route path='/forms' element={<Forms />} />
-            <Route path='/home' element={<h1>Home inProgress..</h1>} />
+            <Route path='/home' element={<Dashboard/>} />
             <Route
               path='/setting'
               element={

@@ -21,7 +21,6 @@ const Employee = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState(null);
   const [filterOption, setFilterOption] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageDoc, setPageDoc] = useState(null);
   const perPage = 10;
@@ -88,12 +87,13 @@ const Employee = () => {
               {applicant?.length > 0 &&
                 applicant
                   ?.filter((ele) => {
-                    if (filterOption && searchTerm.trim() !== "") {
-                      if (typeof ele[filterOption] === "object") {
+                    if (searchTerm.trim() !== "") {
+                      if (typeof ele[filterOption || "fullName"] === "object") {
                         for (const prop in ele[filterOption]) {
                           if (
-                            typeof ele[filterOption][prop] === "string" &&
-                            ele[filterOption][prop]
+                            typeof ele[filterOption || "fullName"][prop] ===
+                              "string" &&
+                            ele[filterOption || "fullName"][prop]
                               .toLowerCase()
                               .includes(searchTerm.toLowerCase())
                           ) {
@@ -102,7 +102,7 @@ const Employee = () => {
                         }
                         return false;
                       } else {
-                        return ele[filterOption]
+                        return ele[filterOption || "fullName"]
                           .toLowerCase()
                           .includes(searchTerm.toLowerCase());
                       }
@@ -123,9 +123,9 @@ const Employee = () => {
             </>
             <EmployeeCard />
           </div>
-          <div className='my-6 overflow-hidden'>
-            <Pagination>
-              <PaginationContent>
+          <div className='my-6 overflow-hidden '>
+            <Pagination classNam="cursor-pointer">
+              <PaginationContent >
                 <PaginationItem>
                   <PaginationPrevious
                     onClick={() => {
@@ -139,7 +139,7 @@ const Employee = () => {
                   <PaginationLink>{currentPage}</PaginationLink>
                 </PaginationItem>
                 {currentPage < pageDoc?.totalPages && (
-                  <PaginationItem>
+                  <PaginationItem >
                     <PaginationLink
                       onClick={() => setCurrentPage(currentPage + 1)}
                     >
