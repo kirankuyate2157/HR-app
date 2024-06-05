@@ -7,7 +7,7 @@
 
 ### Tech Stack used
 - MERN stack
--  In server-side AWS s3 for docs storage using resigned URLs (resumes/Cv, photos, pdf, etc.,)
+-  In server-side AWS s3 for docs storage using presigned URLs (resumes/Cv, photos, pdf, etc.,)
 -  Node mailer for mailing or notifications to applicants who applied for Job (Hiring status updates )
 -  server-side pagination, filter, search 
 -  other Ui and lib...
