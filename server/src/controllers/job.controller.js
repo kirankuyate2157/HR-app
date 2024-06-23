@@ -61,8 +61,8 @@ const getAllJobs = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10 } = req.query;
     const pageNumber = parseInt(page);
     const limitNumber = parseInt(limit);
-    console.log(req?.user?.adminId ?? req?.user?.id)
-    const jobs = await Job.find({ userId: req?.user?.adminId ?? req?.user?.id })
+    console.log("admin :", "member", req?.user?.id)
+    const jobs = await Job.find({ userId: req?.user?.adminId ? req?.user?.adminId : req?.user?.id })
         .sort({ createdAt: -1, status: 1 })
         .skip((pageNumber - 1) * limitNumber)
         .limit(limitNumber);
